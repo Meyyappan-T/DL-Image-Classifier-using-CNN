@@ -226,4 +226,4 @@ predict_image(model, image_index=80, dataset=test_dataset)
 
 
 ## RESULT
-Include your result here
+Developing a convolutional neural network (CNN) classification model for the given dataset was executed successfully.
