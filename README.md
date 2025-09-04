@@ -52,25 +52,27 @@ import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import confusion_matrix, classification_report
 import seaborn as sns
+
 ## Step 1: Load and Preprocess Data
 # Define transformations for images
 transform = transforms.Compose([
-    transforms.ToTensor(),          # Convert images to tensors
-    transforms.Normalize((0.5,), (0.5,))  # Normalize images
+    transforms.ToTensor(),
+    transforms.Normalize((0.5,), (0.5,))
 ])
 
 # Load MNIST dataset
 train_dataset = torchvision.datasets.MNIST(root="./data", train=True, transform=transform, download=True)
 test_dataset = torchvision.datasets.MNIST(root="./data", train=False, transform=transform, download=True)
+
 # Get the shape of the first image in the training dataset
 image, label = train_dataset[0]
 print("Image shape:", image.shape)
 print("Number of training samples:", len(train_dataset))
-
 # Get the shape of the first image in the test dataset
 image, label = test_dataset[0]
 print("Image shape:", image.shape)
 print("Number of testing samples:", len(test_dataset))
+
 # Create DataLoader for batch processing
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
@@ -98,28 +100,26 @@ class CNNClassifier(nn.Module):
 from torchsummary import summary
 # Initialize model
 model = CNNClassifier()
-
 # Move model to GPU if available
 if torch.cuda.is_available():
     device = torch.device("cuda")
     model.to(device)
-
 # Print model summary
-print('Name: Manoj M')
-print('Register Number: 212223230122')
+print('Name: Meyyappan')
+print('Register Number: 212223240086')
 summary(model, input_size=(1, 28, 28))
 
 # Initialize model, loss function, and optimizer
 model = CNNClassifier()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
+
 ## Step 3: Train the Model
 def train_model(model, train_loader, num_epochs=10):
     # Move model to GPU if available
     if torch.cuda.is_available():
         device = torch.device("cuda")
         model.to(device)
-
     for epoch in range(num_epochs):
         model.train()
         running_loss = 0.0
@@ -132,50 +132,47 @@ def train_model(model, train_loader, num_epochs=10):
             loss.backward()
             optimizer.step()
             running_loss += loss.item()
-        print('Name: Manoj M')
-        print('Register Number: 212223230122')
+        print('Name: Meyyappan')
+        print('Register Number: 212223240086')
         print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {running_loss/len(train_loader):.4f}')
 
 # Train the model
 train_model(model, train_loader, num_epochs=10)
-## Step 4: Test the Model
 
+## Step 4: Test the Model
 def test_model(model, test_loader):
     model.eval()
     correct = 0
     total = 0
     all_preds = []
     all_labels = []
-
     with torch.no_grad():
         for images, labels in test_loader:
             if torch.cuda.is_available():
                 images, labels = images.to(device), labels.to(device)
-
             outputs = model(images)
             _, predicted = torch.max(outputs, 1)
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
             all_preds.extend(predicted.cpu().numpy())
             all_labels.extend(labels.cpu().numpy())
-
     accuracy = correct / total
-    print('Name: Manoj M')
-    print('Register Number: 212223230122')
+    print('Name: Meyyappan')
+    print('Register Number: 212223240086')
     print(f'Test Accuracy: {accuracy:.4f}')
     # Compute confusion matrix
     cm = confusion_matrix(all_labels, all_preds)
     plt.figure(figsize=(8, 6))
-    print('Name: Manoj M')
-    print('Register Number: 212223230122')
+    print('Name: Meyyappan')
+    print('Register Number: 212223240086')
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=test_dataset.classes, yticklabels=test_dataset.classes)
     plt.xlabel('Predicted')
     plt.ylabel('Actual')
     plt.title('Confusion Matrix')
     plt.show()
     # Print classification report
-    print('Name: Manoj M')
-    print('Register Number: 212223230122')
+    print('Name: Meyyappan')
+    print('Register Number: 212223240086')
     print("Classification Report:")
     print(classification_report(all_labels, all_preds, target_names=[str(i) for i in range(10)]))
 
@@ -188,15 +185,12 @@ def predict_image(model, image_index, dataset):
     image, label = dataset[image_index]
     if torch.cuda.is_available():
         image = image.to(device)
-
     with torch.no_grad():
         output = model(image.unsqueeze(0))
         _, predicted = torch.max(output, 1)
-
     class_names = [str(i) for i in range(10)]
-
-    print('Name: Manoj M')
-    print('Register Number: 212223230122')
+    print('Name: Meyyappan')
+    print('Register Number: 212223240086')
     plt.imshow(image.cpu().squeeze(), cmap="gray")
     plt.title(f'Actual: {class_names[label]}\nPredicted: {class_names[predicted.item()]}')
     plt.axis("off")
@@ -205,6 +199,7 @@ def predict_image(model, image_index, dataset):
 
 # Example Prediction
 predict_image(model, image_index=80, dataset=test_dataset)
+
 
 ```
 
